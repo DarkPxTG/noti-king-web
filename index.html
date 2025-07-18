@@ -135,6 +135,7 @@
         if (permission === "granted") {
           const token = await messaging.getToken({
             vapidKey: "BLMY1soc-YhsIcl7ZmPGdk1RAqtWqOYCjw9qKNuaBAi7T8m4Nk4nrtpKerUlbVqNo3ouRj5yAERo5ZBm9ywpXxA"
+             serviceWorkerRegistration: await navigator.serviceWorker.ready
           });
           console.log("User Token:", token);
           sound.play();
