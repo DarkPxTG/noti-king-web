@@ -149,7 +149,7 @@
     });
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/noti-king-web/firebase-messaging-sw.js')
+      navigator.serviceWorker.register('/noti-king-web/firebase-messaging-sw.js', {scope: '/noti-king-web/'})
         .then(reg => {
           console.log("✅ Service Worker Registered:", reg);
         }).catch(err => {
