@@ -129,25 +129,29 @@
     const statusText = document.getElementById("status");
     const sound = document.getElementById("notifSound");
 
-    btn.addEventListener("click", async () => {
-      try {
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          const token = await messaging.getToken({
-            vapidKey: "BLMY1soc-YhsIcl7ZmPGdk1RAqtWqOYCjw9qKNuaBAi7T8m4Nk4nrtpKerUlbVqNo3ouRj5yAERo5ZBm9ywpXxA"
-             serviceWorkerRegistration: await navigator.serviceWorker.ready
-          });
-          console.log("User Token:", token);
-          sound.play();
-          statusText.innerHTML = `Notifications Enabled ✅\n\nUser Token:\n<textarea readonly>${token}</textarea>\n\nCopy this token to send notifications manually from Firebase Console.`;
-        } else {
-          statusText.innerText = "Permission Denied ❌";
-        }
-      } catch (err) {
-        console.error(err);
-        statusText.innerText = "Failed to activate ❌";
-      }
-    });
+   btn.addEventListener("click", async () => {
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+
+      const serviceWorkerRegistration = await navigator.serviceWorker.ready;
+
+      const token = await messaging.getToken({
+        vapidKey: "BLMY1soc-YhsIcl7ZmPGdk1RAqtWqOYCjw9qKNuaBAi7T8m4Nk4nrtpKerUlbVqNo3ouRj5yAERo5ZBm9ywpXxA",
+        serviceWorkerRegistration: serviceWorkerRegistration
+      });
+
+      console.log("User Token:", token);
+      sound.play();
+      statusText.innerHTML = `Notifications Enabled ✅\n\nUser Token:\n<textarea readonly>${token}</textarea>\n\nCopy this token to send notifications manually from Firebase Console.`;
+    } else {
+      statusText.innerText = "Permission Denied ❌";
+    }
+  } catch (err) {
+    console.error(err);
+    statusText.innerText = "Failed to activate ❌";
+  }
+});
 
     if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/noti-king-web/firebase-messaging-sw.js', {scope: '/noti-king-web/'})
