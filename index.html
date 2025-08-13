@@ -4,53 +4,125 @@
   <meta charset="UTF-8" />
   <title>Activate Notifications</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-messaging-compat.js"></script>
+  <!-- Notification sound -->
   <audio id="notifSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:'Press Start 2P',cursive;
-      height:100vh;
-      background:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-      background-size:cover;
-      color:#fff;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      overflow:hidden;
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);backdrop-filter:blur(5px);}
-    .container{position:relative;z-index:2;text-align:center;background:rgba(0,0,0,.7);padding:40px;border-radius:20px;box-shadow:0 0 25px #0f0;animation:glow 2s infinite alternate;max-width:90vw;width:360px;}
-    @keyframes glow{0%{box-shadow:0 0 15px #0f0;}100%{box-shadow:0 0 30px #0f0;}}
-    h1{font-size:20px;margin-bottom:30px;color:#0f0;text-shadow:0 0 10px #0f0;}
-    button{padding:15px 35px;font-size:14px;border:none;border-radius:30px;background:linear-gradient(90deg,#00ff88,#00c0ff);color:black;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;box-shadow:0 0 15px #00ff88;}
-    button:hover{transform:scale(1.1);box-shadow:0 0 25px #00ff88;}
-    #status{margin-top:20px;font-size:12px;color:#ccc;text-align:left;white-space:pre-wrap;word-wrap:break-word;}
-    textarea{margin-top:10px;width:100%;font-family:monospace;font-size:10px;height:80px;resize:none;cursor:pointer;}
+
+    body {
+      font-family: 'Press Start 2P', cursive;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #0f0;
+      animation: glow 2s infinite alternate;
+      max-width: 90vw;
+      width: 360px;
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 15px #0f0; }
+      100% { box-shadow: 0 0 30px #0f0; }
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #0f0;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    button {
+      padding: 15px 35px;
+      font-size: 14px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #00ff88, #00c0ff);
+      color: black;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 15px #00ff88;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #00ff88;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #ccc;
+      text-align: left;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    textarea {
+      margin-top: 10px;
+      width: 100%;
+      font-family: monospace;
+      font-size: 10px;
+      height: 80px;
+      resize: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
+
   <div class="container">
-    <h1>Activate Jungle Notifications</h1>
+    <h1>Activate Jungle Notifications </h1>
     <button id="notifyBtn">LET'S GO</button>
     <p id="status">Ready for action...</p>
   </div>
 
   <script>
-    // --- Firebase ---
     const firebaseConfig = {
-      apiKey:"AIzaSyB1PfOc9lMM1ZAXSQpHpDNDINw9EaIIfKY",
-      authDomain:"noti-king.firebaseapp.com",
-      projectId:"noti-king",
-      storageBucket:"noti-king.firebasestorage.app",
-      messagingSenderId:"453245140777",
-      appId:"1:453245140777:web:a5acde8da69d325d3f0138",
-      measurementId:"G-T0ZG929L5V"
+      apiKey: "AIzaSyB1PfOc9lMM1ZAXSQpHpDNDINw9EaIIfKY",
+      authDomain: "noti-king.firebaseapp.com",
+      projectId: "noti-king",
+      storageBucket: "noti-king.firebasestorage.app",
+      messagingSenderId: "453245140777",
+      appId: "1:453245140777:web:a5acde8da69d325d3f0138",
+      measurementId: "G-T0ZG929L5V"
     };
+
     firebase.initializeApp(firebaseConfig);
     const messaging = firebase.messaging();
     const btn = document.getElementById("notifyBtn");
@@ -60,64 +132,52 @@
     btn.addEventListener("click", async () => {
       try {
         const permission = await Notification.requestPermission();
-        if(permission==="granted"){
+        if (permission === "granted") {
+          // چک کردن توکن ذخیره شده
           let token = localStorage.getItem("userFcmToken");
-          if(!token){
+
+          if (!token) {
             const serviceWorkerRegistration = await navigator.serviceWorker.ready;
             token = await messaging.getToken({
-              vapidKey:"BLMY1soc-YhsIcl7ZmPGdk1RAqtWqOYCjw9qKNuaBAi7T8m4Nk4nrtpKerUlbVqNo3ouRj5yAERo5ZBm9ywpXxA",
-              serviceWorkerRegistration:serviceWorkerRegistration
+              vapidKey: "BLMY1soc-YhsIcl7ZmPGdk1RAqtWqOYCjw9qKNuaBAi7T8m4Nk4nrtpKerUlbVqNo3ouRj5yAERo5ZBm9ywpXxA",
+              serviceWorkerRegistration: serviceWorkerRegistration
             });
-            if(token){localStorage.setItem("userFcmToken",token);}
+            if (token) {
+              localStorage.setItem("userFcmToken", token);
+            }
+          } else {
+            console.log("✅ استفاده از توکن ذخیره شده");
           }
-          console.log("User Token:",token);
+
+          console.log("User Token:", token);
           sound.play();
-          statusText.innerHTML=`Notifications Enabled ✅\n\nUser Token:\n<textarea readonly>${token}</textarea>\n\nClick to copy.`;
-          const textarea=statusText.querySelector('textarea');
-          textarea.addEventListener('click',()=>{textarea.select();document.execCommand('copy');alert('Token copied!');});
-        }else{statusText.innerText="Permission Denied ❌";}
-      }catch(err){console.error(err);statusText.innerText="Failed ❌";}
-    });
+          statusText.innerHTML = `Notifications Enabled ✅\n\nUser Token:\n<textarea readonly>${token}</textarea>\n\nClick the token to copy it.`;
 
-    if('serviceWorker' in navigator){
-      navigator.serviceWorker.register('firebase-messaging-sw.js')
-      .then(reg=>console.log("✅ Service Worker Registered:",reg))
-      .catch(err=>console.error("❌ Service Worker Failed:",err));
-    }
+          // اضافه کردن کلیک برای کپی خودکار متن
+          const textarea = statusText.querySelector('textarea');
+          textarea.addEventListener('click', () => {
+            textarea.select();
+            document.execCommand('copy');
+            alert('Token copied to clipboard!');
+          });
 
-    // --- جلوگیری از DevTools و F12 ---
-    (function(){
-      let devtoolsOpen=false;
-      const threshold=160;
-
-      const checkDevTools=()=> {
-        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-        if(widthThreshold || heightThreshold){ devtoolsOpen=true; }
-      };
-
-      setInterval(()=>{
-        checkDevTools();
-        if(devtoolsOpen){
-          document.body.innerHTML="<h1 style='color:red;text-align:center;margin-top:20%;font-size:40px;'>کور خوندی 😎</h1>";
-          // جلوگیری از دانلود محتوا
-          const blob = new Blob([""], { type: "text/html" });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "index.html";
-          a.click();
+        } else {
+          statusText.innerText = "Permission Denied ❌";
         }
-      },500);
-    })();
-
-    document.addEventListener('contextmenu', e=>e.preventDefault());
-    document.addEventListener('keydown', e=>{
-      if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["I","J","C"].includes(e.key.toUpperCase()))||(e.ctrlKey&&e.key.toUpperCase()==="U")){
-        e.preventDefault();
-        alert("دستت کوتاهه 😏");
+      } catch (err) {
+        console.error(err);
+        statusText.innerText = "Failed to activate ❌";
       }
     });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('firebase-messaging-sw.js')
+        .then(reg => {
+          console.log("✅ Service Worker Registered:", reg);
+        }).catch(err => {
+          console.error("❌ Service Worker Registration Failed:", err);
+        });
+    }
   </script>
 </body>
 </html>
